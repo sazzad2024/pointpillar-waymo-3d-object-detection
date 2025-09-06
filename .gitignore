@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyTorch
+*.pth
+*.pt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (too large for GitHub)
+*.tfrecord
+*.npy
+*.pkl
+waymo_processed_data_*/
+raw_data/
+
+# Model weights
+*.pth
+*.pt
+checkpoints/
+output/
+
+# Logs
+*.log
+logs/
+tensorboard_logs/
+
+# SLURM
+*.out
+*.err
+slurm-*.out
