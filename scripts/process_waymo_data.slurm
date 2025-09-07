@@ -1,30 +1,30 @@
 #!/bin/bash
-#SBATCH --job-name=waymo_final
+#SBATCH --job-name=waymo_process
 #SBATCH --nodes=1
 #SBATCH --time=08:00:00
 #SBATCH --mem=64G
 #SBATCH --cpus-per-task=16
 #SBATCH --gres=gpu:1
 #SBATCH --partition=batch
-#SBATCH --output=waymo_final_%j.out
-#SBATCH --error=waymo_final_%j.err
+#SBATCH --output=waymo_process_%j.out
+#SBATCH --error=waymo_process_%j.err
 
-# Load modules
+# Load modules (adjust for your cluster)
 module load foss/2022a
 module load CUDA/11.7.0
 
-# Initialize conda
-source /project/dsi/apps/easybuild/software/Anaconda3/2023.03-1/etc/profile.d/conda.sh
-conda activate /project/yzhang/alam/waymo_research1
+# Initialize conda (adjust path for your cluster)
+source /path/to/conda/etc/profile.d/conda.sh
+conda activate waymo_env
 
-# Set PYTHONPATH
-export PYTHONPATH=/project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet:$PYTHONPATH
+# Set PYTHONPATH (adjust path to your OpenPCDet installation)
+export PYTHONPATH=/path/to/OpenPCDet:$PYTHONPATH
 
-# Navigate to OpenPCDet
-cd /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet
+# Navigate to OpenPCDet directory
+cd /path/to/OpenPCDet
 
 # Fix DATA_PATH in config (ensure it points to correct location)
-sed -i 's|DATA_PATH: .*|DATA_PATH: /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet/data/waymo|' tools/cfgs/dataset_configs/waymo_dataset.yaml
+sed -i 's|DATA_PATH: .*|DATA_PATH: /path/to/OpenPCDet/data/waymo|' tools/cfgs/dataset_configs/waymo_dataset.yaml
 
 echo "=== Final Data Processing with GPU ==="
 echo "Training files: $(wc -l < data/waymo/ImageSets/train.txt)"

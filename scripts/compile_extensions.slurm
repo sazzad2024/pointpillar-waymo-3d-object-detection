@@ -9,20 +9,20 @@
 #SBATCH --output=compile_%j.out
 #SBATCH --error=compile_%j.err
 
-# Load modules
+# Load modules (adjust for your cluster)
 module load foss/2022a
 module load CUDA/11.7.0
 
-# Initialize conda
-source /project/dsi/apps/easybuild/software/Anaconda3/2023.03-1/etc/profile.d/conda.sh
-conda activate /project/yzhang/alam/waymo_research1
+# Initialize conda (adjust path for your cluster)
+source /path/to/conda/etc/profile.d/conda.sh
+conda activate waymo_env
 
-# Set CUDA_HOME
-export CUDA_HOME=/project/dsi/apps/easybuild/software/CUDA/11.7.0
+# Set CUDA_HOME (adjust path for your cluster)
+export CUDA_HOME=/path/to/cuda
 export PATH=$CUDA_HOME/bin:$PATH
 
-# Navigate to OpenPCDet
-cd /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet
+# Navigate to OpenPCDet directory
+cd /path/to/OpenPCDet
 
 echo "=== Compiling OpenPCDet CUDA Extensions ==="
 echo "CUDA_HOME: $CUDA_HOME"

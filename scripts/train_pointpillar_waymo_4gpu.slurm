@@ -10,25 +10,25 @@
 #SBATCH --output=train_4gpu_%j.out
 #SBATCH --error=train_4gpu_%j.err
 
-# Load modules
+# Load modules (adjust for your cluster)
 module load foss/.2022a
 module load CUDA/.11.7.0
 
-# Initialize conda
-source /project/dsi/apps/easybuild/software/Anaconda3/2023.03-1/etc/profile.d/conda.sh
-conda activate /project/yzhang/alam/waymo_research1
+# Initialize conda (adjust path for your cluster)
+source /path/to/conda/etc/profile.d/conda.sh
+conda activate waymo_env
 
-# Set PYTHONPATH
-export PYTHONPATH=/project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet:$PYTHONPATH
+# Set PYTHONPATH (adjust path to your OpenPCDet installation)
+export PYTHONPATH=/path/to/OpenPCDet:$PYTHONPATH
 
-# Navigate to OpenPCDet
-cd /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet
+# Navigate to OpenPCDet directory
+cd /path/to/OpenPCDet
 
 # Fix DATA_PATH in waymo_dataset.yaml to point to correct location
-sed -i 's|DATA_PATH: .*|DATA_PATH: /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet/data/waymo|' tools/cfgs/dataset_configs/waymo_dataset.yaml
+sed -i 's|DATA_PATH: .*|DATA_PATH: /path/to/OpenPCDet/data/waymo|' tools/cfgs/dataset_configs/waymo_dataset.yaml
 
 # Fix _BASE_CONFIG_ path in pointpillar_1x.yaml to use absolute path
-sed -i 's|_BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml|_BASE_CONFIG_: /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet/tools/cfgs/dataset_configs/waymo_dataset.yaml|' tools/cfgs/waymo_models/pointpillar_1x.yaml
+sed -i 's|_BASE_CONFIG_: cfgs/dataset_configs/waymo_dataset.yaml|_BASE_CONFIG_: /path/to/OpenPCDet/tools/cfgs/dataset_configs/waymo_dataset.yaml|' tools/cfgs/waymo_models/pointpillar_1x.yaml
 
 echo "=== 🚀 Starting PointPillar 4-GPU Training ==="
 echo "Job ID: $SLURM_JOB_ID"
@@ -61,7 +61,7 @@ torchrun \
     --nproc_per_node=4 \
     --master_port=29500 \
     tools/train.py \
-    --cfg_file /project/yzhang/alam/waymo-env/waymo-od/research1/code/OpenPCDet/tools/cfgs/waymo_models/pointpillar_1x.yaml \
+    --cfg_file /path/to/OpenPCDet/tools/cfgs/waymo_models/pointpillar_1x.yaml \
     --batch_size 8 \
     --epochs 30 \
     --workers 2 \
